@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+    
+        <title>Reaction Game</title>
+        <meta charset="utf-8">
+        
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat|Nunito|Josefin+Sans" rel="stylesheet">
+        
+        <style type="text/css">
+            body {
+                font-family: "Josefin Sans", sans-serif;
+                margin-left: -5px;
+                margin-top: -25px;
+            }
+            #shape {
+                background-color: royalblue;
+                width: 200px;
+                height: 200px;
+                display: "none";
+                position: relative;
+            }
+            .container {
+                margin: 50px;
+                font-size: 1.5em;
+                
+            }
+            .shape-container {
+                border: 5px solid black;
+                background-color: black;
+                border-radius: 15px;
+                padding: 20px;
+                margin: auto;
+                width: 90%;
+                height: 600px;
+            }
+            .title {
+                font-family: "Nunito", sans-serif;
+                font-size: 3em;
+                color: #fff;
+                background-color: skyblue;
+                width: 100%;
+                height: 75px;
+                text-align: center;
+                left: 0;
+                top: 50%;
+            }
+            .instru {
+                color: orangered;
+            }
+            
+        </style>
+    
+    </head>
+    
+    <body>
+        
+        <h1 class="title">Test Your Reaction</h1>
+        <div class="container">
+            
+            <div class="text">
+            
+                <p class="instru">Test your reaction by clicking the shapes as FAST as you can!</p>
+                <h3>Your time: <span id="reactionTime">0.00</span> s</h3>
+                
+                <p>Amount of clicks: <span id="clickNumber"></span></p>
+                
+            </div>
+            
+            <div class="shape-container">
+                
+                <div id="shape"></div>
+            
+            </div>
+        
+        
+        </div>
+        
+        <script type="text/javascript">
+            const shape = document.getElementById("shape");
+            let start = Date.now();
+            let clicks = 0;
+            
+            function getRandomColor() {
+                let letters = "23456789ABCDE";
+                let color = "#";
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+            
+            function newShape() {
+                shape.style.display = "block";
+                
+                shape.style.backgroundColor = getRandomColor();
+                
+                let top = Math.random() * 420 + "px";
+                let left = Math.random() * 550 + "px";
+                let width = Math.random() * 300 + "px";
+                
+                if (Math.random() > 0.5) {
+                    shape.style.borderRadius = "50%";
+                } else {
+                    shape.style.borderRadius = "0";
+                }
+                
+                
+                shape.style.top = top;
+                shape.style.left = left;
+                shape.style.width = width;
+                shape.style.height = width;
+                
+                start = Date.now();
+            }
+            
+            function appearDelay() { 
+                
+                setTimeout(newShape, Math.random() * 2000);
+            }
+                
+            
+            document.getElementById("shape").onclick=function() {
+                shape.style.display = "none";
+                clicks++;
+                
+                let end = Date.now();
+                
+                let time = Math.floor(end - start) / 1000;
+                
+                document.getElementById("reactionTime").innerHTML = time;
+                document.getElementById("clickNumber").innerHTML = clicks;
+                
+                appearDelay(newShape);
+                            
+            }
+            
+        </script>
+    
+    </body>
+
+</html>
